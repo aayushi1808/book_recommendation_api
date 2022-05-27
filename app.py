@@ -15,11 +15,11 @@ def combine_features(data):
     features.append(data['Title'][i]+ ' '+ data['Authors'][i]+ ' '+data['Language'][i]+ ' '+data['Bookshelves'][i])
   return features
 
-df = pd.read_csv('out.csv', encoding='unicode_escape')
-columns =['Title', 'Authors', 'Language', 'Bookshelves']
-df['combined_features'] = combine_features(df)
-cm = CountVectorizer().fit_transform(df['combined_features'])
-cs = cosine_similarity(cm)
+# df = pd.read_csv('out.csv', encoding='unicode_escape')
+# columns =['Title', 'Authors', 'Language', 'Bookshelves']
+# df['combined_features'] = combine_features(df)
+# cm = CountVectorizer().fit_transform(df['combined_features'])
+# cs = cosine_similarity(cm)
 
 timezone = pytz.timezone("Asia/Kolkata")
 
@@ -35,6 +35,12 @@ def init():
 @app.route('/')
 def homepage():
     the_time = datetime.now(timezone).strftime("%A, %d %b %Y %l:%M %p")
+    global cs
+    df = pd.read_csv('out.csv', encoding='unicode_escape')
+    columns =['Title', 'Authors', 'Language', 'Bookshelves']
+    df['combined_features'] = combine_features(df)
+    cm = CountVectorizer().fit_transform(df['combined_features'])
+    cs = cosine_similarity(cm)
     return """
     <h1>Hello!</h1>
     <p>It is currently {time}.</p>
