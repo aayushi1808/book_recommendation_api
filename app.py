@@ -1,4 +1,5 @@
 import flask
+from flask_cors import CORS
 from datetime import datetime
 import pytz
 import numpy as np
@@ -8,6 +9,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import CountVectorizer
 
 app = flask.Flask(__name__)
+CORS(app)
 
 def combine_features(data):
   features = []
